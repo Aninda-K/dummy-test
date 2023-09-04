@@ -1,4 +1,4 @@
-name: Split commit message
+name: dummy-test
 on:
   push:
     branches:
@@ -21,6 +21,7 @@ jobs:
       run: |
         commit_message=$(git log --format=%B)
         export message=${commit_message}
+        echo message
 
     - name: Split commit message
       id: split_message
@@ -32,3 +33,6 @@ jobs:
         export Environment=${parts[0]}
         export AppCustomID=${parts[1]}
         export CommitMessage=${parts[2]}
+        echo Environment
+        echo AppCustomID
+        echo CommitMessage
