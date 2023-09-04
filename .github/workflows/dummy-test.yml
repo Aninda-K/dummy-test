@@ -19,7 +19,7 @@ jobs:
     - name: Get commit message
       id: commit_message
       run: |
-        commit_message=$(git log --format=%B -n 1 ${{ github.sha }})
+        commit_message=$(git log --format=%B)
         export message=${commit_message}
 
     - name: Split commit message
