@@ -3,11 +3,11 @@ on:
   push:
     branches:
     - main
-      
+
 defaults:
   run:
     shell: bash
-    
+
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -18,5 +18,5 @@ jobs:
       
     - name: Get commit message
       run: |
-        export message= $(git log --format=%B)
+        export message=$(git log --format=%B)
         echo $message
