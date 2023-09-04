@@ -22,4 +22,4 @@ jobs:
     - name: Message Echo Test
       id: message-echo-test
       run: |
-        echo "$(git show -s --format=%s)" 
+        echo $(git show -s --format=%s)
