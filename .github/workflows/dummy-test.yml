@@ -17,6 +17,14 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Get commit message
+      id: commit_message
+      run: echo "::set-output name=message::$(git log --format=%B -n 1 ${{ github.sha }})"
+
+    - name: Split commit message
+      id: split_message
       run: |
-        export message=$(git log --format=%B)
-        echo $message
+        commit_message="${{ steps.commit_message.outputs.message }}"
+        IFS='---' read -r -a parts <<< "$commit_message"
+        echo "::set-output name=Environment::${parts[0]}"
+        echo "::set-output name=App Custom ID::${parts[1]}"
+        echo "::set-output name=Commit Message::${parts[2]}"
