@@ -18,6 +18,7 @@ jobs:
     - name: Checkout Branch
       id: checkout-branch-from-master
       uses: actions/checkout@v2
+      
     - name: Message Echo Test
       id: message-echo-test
       run: |
