@@ -20,15 +20,14 @@ jobs:
       id: commit_message
       run: |
         commit_message=$(git log --format=%B -n 1 ${{ github.sha }})
-        echo "::outputs::message=${commit_message}"
+        echo "${commit_message}"
 
     - name: Split commit message
       id: split_message
       run: |
-        IFS='---'
         commit_message=$(echo "$commit_message")
         if [ -n "$commit_message" ]; then
-          read -r -a parts <<< "$commit_message"
+          read -r -a parts <<< "$(tr -s ' ' '\---' <<< "$commit_message")"
           echo "::outputs::Environment=${parts[0]}"
           echo "::outputs::App Custom ID=${parts[1]}"
           echo "::outputs::Commit Message=${parts[2]}"
