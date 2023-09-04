@@ -1,11 +1,8 @@
 name: dummy-test
-
 on:
-  pull_request:
-  release:
-    types:
-      - edited
-      - created
+  push:
+    branches:
+    - main
       
 defaults:
   run:
@@ -19,8 +16,7 @@ jobs:
       id: checkout-branch-from-master
       uses: actions/checkout@v2
       
-    - name: Message Echo Test
-      id: message-echo-test
+    - name: Get commit message
       run: |
-        message  = $(git show -s --format=%s)
+        export message=$(git show -s --format=%s)
         echo $message
