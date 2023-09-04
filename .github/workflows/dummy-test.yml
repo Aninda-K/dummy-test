@@ -26,8 +26,10 @@ jobs:
       id: split_message
       run: |
         IFS='---'
-        commit_message=${{ steps.commit_message.outputs.message }}
-        read -r -a parts <<< "$commit_message"
-        echo "::outputs::Environment=${parts[0]}"
-        echo "::outputs::App Custom ID=${parts[1]}"
-        echo "::outputs::Commit Message=${parts[2]}"
+        commit_message=$(echo "$commit_message")
+        if [ -n "$commit_message" ]; then
+          read -r -a parts <<< "$commit_message"
+          echo "::outputs::Environment=${parts[0]}"
+          echo "::outputs::App Custom ID=${parts[1]}"
+          echo "::outputs::Commit Message=${parts[2]}"
+        fi
