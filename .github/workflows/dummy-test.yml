@@ -1,18 +1,20 @@
-name: paprika
+name: dummy-test
 
 on:
   pull_request:
   release:
     types:
+      - edited
       - created
-  
-  jobs:
-    build:
-
-      runs-on: ubuntu-20.04
-
-      steps:
-        - name: sample-prompt
-          id: sample-prompt
-          run: |
-            echo "Aninda is Awesome"
+defaults:
+  run:
+    shell: bash
+    
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Echo Test
+      id: echo-test
+      run: |
+        echo :: Test
