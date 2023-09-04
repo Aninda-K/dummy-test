@@ -1,4 +1,4 @@
-name: dummy-test
+name: Split commit message
 on:
   push:
     branches:
@@ -9,7 +9,7 @@ defaults:
     shell: bash
 
 jobs:
-  build:
+  split-message:
     runs-on: ubuntu-20.04
     steps:
     - name: Checkout Branch
@@ -20,13 +20,15 @@ jobs:
       id: commit_message
       run: |
         commit_message=$(git log --format=%B -n 1 ${{ github.sha }})
-        echo "${commit_message}"
+        echo "::outputs::message=${commit_message}"
 
     - name: Split commit message
       id: split_message
       run: |
-          commit_message="${{ steps.get-commit-message.outputs.message }}"
-          IFS='---' read -r -a message_parts <<< "$commit_message"
-          echo "::set-output name=part1::${message_parts[0]}"
-          echo "::set-output name=part2::${message_parts[1]}"
-          echo "::set-output name=part3::${message_parts[2]}"
+        IFS='---'
+        commit_message=${{ steps.commit_message.outputs.message }}
+        tr -s ' ' '\---' <<< "$commit_message"
+        read -r -a parts <<< "$(tr -s ' ' '\---' <<< "$commit_message")"
+        echo "::outputs::Environment=${parts[0]}"
+        echo "::outputs::App Custom ID=${parts[1]}"
+        echo "::outputs::Commit Message=${parts[2]}"
