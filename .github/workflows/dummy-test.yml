@@ -14,7 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-    - name: Echo Test
-      id: echo-test
+    - name: Message Echo Test
+      id: message-echo-test
       run: |
-        echo :: Test
+          echo "$(git show -s --format=%s)" 
