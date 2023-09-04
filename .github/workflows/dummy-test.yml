@@ -14,7 +14,10 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
+    - name: Checkout Branch
+      id: checkout-branch-from-master
+      uses: actions/checkout@v2
     - name: Message Echo Test
       id: message-echo-test
       run: |
-          echo "$(git show -s --format=%s)" 
+        echo "$(git show -s --format=%s)" 
