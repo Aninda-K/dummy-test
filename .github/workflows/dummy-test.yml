@@ -1,0 +1,18 @@
+name: paprika
+
+on:
+  pull_request:
+  release:
+    types:
+      - created
+  
+  jobs:
+    build:
+
+      runs-on: ubuntu-20.04
+
+      steps:
+        - name: sample-prompt
+          id: sample-prompt
+          run: |
+            echo "Aninda is Awesome"
