@@ -25,7 +25,7 @@ jobs:
         id: split_message
         run: |
           message="${{ env.message }}"
-          IFS='$$$' read -r -a parts <<< "$message"
+          IFS='---' read -r -a parts <<< "$message"
           echo "Environment=${parts[0]}" >> $GITHUB_ENV
           echo "AppCustomID=${parts[1]}" >> $GITHUB_ENV
           echo "CommitMessage=${parts[2]}" >> $GITHUB_ENV
