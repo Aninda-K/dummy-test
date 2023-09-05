@@ -2,37 +2,36 @@ name: dummy-test
 on:
   push:
     branches:
-    - main
-
-defaults:
-  run:
-    shell: bash
+      - main
 
 jobs:
   split-message:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    env:
+      Environment: ""
+      AppCustomID: ""
+      CommitMessage: ""
     steps:
-    - name: Checkout Branch
-      id: checkout-branch-from-master
-      uses: actions/checkout@v2
-      
-    - name: Get commit message
-      id: commit_message
-      run: |
-        commit_message=$(git log --format=%B)
-        export message=${commit_message}
-        echo $message
+      - name: Checkout Branch
+        uses: actions/checkout@v2
 
-    - name: Split commit message
-      id: split_message
-      run: |
-        IFS='---'
-        export message=${{ steps.commit_message.outputs.message }}
-        tr -s ' ' '\---' <<< "$message"
-        read -r -a parts <<< "$(tr -s ' ' '\---' <<< "$message")"
-        export Environment=${parts[0]}
-        export AppCustomID=${parts[1]}
-        export CommitMessage=${parts[2]}
-        echo $Environment
-        echo $AppCustomID
-        echo $CommitMessage
+      - name: Get commit message
+        id: commit_message
+        run: |
+          commit_message=$(git log --format=%B)
+          echo "message=$commit_message" >> $GITHUB_ENV
+
+      - name: Split commit message
+        id: split_message
+        run: |
+          message="${{ env.message }}"
+          IFS='---' read -r -a parts <<< "$message"
+          echo "Environment=${parts[0]}" >> $GITHUB_ENV
+          echo "AppCustomID=${parts[1]}" >> $GITHUB_ENV
+          echo "CommitMessage=${parts[2]}" >> $GITHUB_ENV
+
+      - name: Display variables
+        run: |
+          echo "Environment=${{ env.Environment }}"
+          echo "AppCustomID=${{ env.AppCustomID }}"
+          echo "CommitMessage=${{ env.CommitMessage }}"
