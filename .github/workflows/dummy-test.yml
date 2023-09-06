@@ -1,20 +1,20 @@
-name: Get and Split Commit Message
+name: Get Commit Message
+on: [push]
 
-on:
-  push:
-    branches:
-      - main 
 jobs:
-  get-and-split-commit-message:
+  get-commit-message:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
       - name: Get Commit Message
-        id: commit_message
-        run: echo "::set-output name=message::$(git log --format=%B -n 1 ${{ github.sha }})"
+        run: |
+          COMMIT_MESSAGE=$(git log --format=%B -n 1 ${{ github.event.after }})
+          echo "Commit message: $COMMIT_MESSAGE"
+      - name: Split Commit Message
+        run: |
+          IFS='---' read -ra SPLIT_MESSAGE <<< "$COMMIT_MESSAGE"
+          for i in "${SPLIT_MESSAGE[@]}"; do
+            echo "Part: $i"
+          done
 
       # - name: Display Commit Message
       #   id: display_message
