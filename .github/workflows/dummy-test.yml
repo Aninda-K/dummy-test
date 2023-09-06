@@ -19,7 +19,7 @@ jobs:
       - name: Print changed file path
         run: |
           current_changed_file_path=$(git diff --name-only HEAD^ --)
-          echo "The changed file path is: ${{ current_changed_file_path}}"
+          echo "The changed file path is: $current_changed_file_path"
           
       - name: Split commit message
         run: |
