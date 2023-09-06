@@ -18,7 +18,7 @@ jobs:
       - name: Split commit message
         run: |
           echo "Commit message: ${{ github.event.head_commit.message }}"
-          commit_message_parts=$(echo "${{ github.event.head_commit.message }}" | tr -s ':::' "\n")
+          commit_message_parts=$(echo "${{ github.event.head_commit.message }}" | tr -s '||' "\n")
           echo "Commit message parts:"
           for part in "${commit_message_parts[@]}"
           do
