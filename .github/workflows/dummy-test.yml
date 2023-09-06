@@ -23,6 +23,7 @@ jobs:
           folder_path="$(dirname "${changed_file_path}")" 
           echo "Changed folder path: $folder_path"
           change_path="$"{folder_path}"/destination.yaml"
+          echo $change_path
           
           
       - name: Split commit message
