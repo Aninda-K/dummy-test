@@ -2,9 +2,13 @@ name: Get Commit Message
 on: [push]
 
 jobs:
-  get-commit-message:
+  get-and-split-commit-message:
     runs-on: ubuntu-latest
+    
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
       - name: Get Commit Message
         run: |
           COMMIT_MESSAGE=$(git log --format=%B -n 1 ${{ github.event.after }})
@@ -15,14 +19,3 @@ jobs:
           for i in "${SPLIT_MESSAGE[@]}"; do
             echo "Part: $i"
           done
-
-      # - name: Display Commit Message
-      #   id: display_message
-      #   run: echo "Commit Message: ${{ steps.commit_message.outputs.message }}"
-
-      # - name: Split Commit Message
-      #   id: split_message
-      #   run: echo "::set-output name=split_message::$(echo '${{ steps.commit_message.outputs.message }}' | awk -v RS='---' 'NR==1{print}')"
-
-      # - name: Display Split Message
-      #   run: echo "Split Message: ${{ steps.split_message.outputs.split_message }}"
