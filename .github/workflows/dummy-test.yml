@@ -15,11 +15,10 @@ jobs:
         with:
           ref: ${{ github.event.head_commit.ref }}
           
-      - name: List Changed Files
+      - name: Print changed file path
         run: |
-          git diff --name-only ${{ github.event.before }} ${{ github.sha }} | while read -r file; do
-            echo "Changed File: $file"
-          done
+          echo "Changed files:"
+          git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
           
       - name: Split commit message
         run: |
