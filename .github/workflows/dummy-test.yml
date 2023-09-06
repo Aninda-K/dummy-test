@@ -22,5 +22,5 @@ jobs:
           echo "Commit message parts:"
           for part in "${commit_message_parts[@]}"
           do
-            echo "  $part"
+            echo "$part"
           done
