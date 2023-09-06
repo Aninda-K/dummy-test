@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get commit message
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.head_commit.ref }}
+          fetch-depth: 0
       
       - name: Print changed file path
         run: |
