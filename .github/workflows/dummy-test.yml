@@ -22,7 +22,7 @@ jobs:
           changed_file_path=$(git diff --name-only $previous_commit_sha $current_commit_sha)
           folder_path="$(dirname "${changed_file_path}")" 
           echo "Changed folder path: $folder_path"
-          change_path="$"{folder_path}"/destination.yaml"
+          change_path="${folder_path}/destination.yaml"
           echo $change_path
           
           
