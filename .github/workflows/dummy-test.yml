@@ -14,16 +14,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.head_commit.ref }}
-          
-      - name: Get changed files
-        uses: actions/changed-files@v2
-        with:
-          # Only get the changed files in the main branch.
-          branch: main
+  
 
       - name: Print changed file path
         run: |
-          echo "The changed file path is: ${{ steps.get-changed-files.outputs.changed_files[0] }}"
+          current_changed_file_path=$(git diff --name-only HEAD^ --)
+          echo "The changed file path is: ${{ current_changed_file_path}}"
           
       - name: Split commit message
         run: |
