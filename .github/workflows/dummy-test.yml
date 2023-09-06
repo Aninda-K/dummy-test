@@ -17,8 +17,8 @@ jobs:
           
       - name: Print changed file path
         run: |
-          echo "Changed files:"
-          git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
+          current_changed_file_path=$(git diff --name-only HEAD^)
+          echo "The current changed file path is: $current_changed_file_path"
           
       - name: Split commit message
         run: |
